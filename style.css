@@ -3,7 +3,7 @@ body.theme-aurora{background-image:linear-gradient(135deg,#08142755,#03081244),u
 
 
 /* Round only the per-eye video frame; keep the rest of the app rectangular. */
-.vr-mode[data-current-page="video"] .video-stage{width:min(100%,54dvh);height:auto;aspect-ratio:1;flex:0 0 auto;margin:auto;border-radius:50%;border:4px solid #111a22;outline:1px solid #51d6a455;box-shadow:0 0 26px #000b,inset 0 0 24px #0009}
-.vr-mode[data-current-page="video"] .video-stage iframe,.vr-mode[data-current-page="video"] .video-stage video,.vr-mode[data-current-page="video"] .video-stage canvas{object-fit:cover}
-.vr-mode[data-current-page="video"] .video-stage .yt-slave{pointer-events:none}
+.vr-mode .video-stage{width:min(100%,54dvh);height:auto;aspect-ratio:1;flex:0 0 auto;margin:auto;border-radius:50%;border:4px solid #111a22;outline:1px solid #51d6a455;box-shadow:0 0 26px #000b,inset 0 0 24px #0009}
+.vr-mode .video-stage iframe,.vr-mode .video-stage video,.vr-mode .video-stage canvas{object-fit:cover}
+.vr-mode .video-stage .yt-slave{pointer-events:none}
 
