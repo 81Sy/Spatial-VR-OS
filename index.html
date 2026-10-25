@@ -1,8 +1,91 @@
-<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#020705"><link rel="manifest" href="manifest.webmanifest"><title>Spatial VR OS</title><link rel="stylesheet" href="style.css"></head><body><main><header><button id="home" class="brand"><span class="brand-icon">◉</span><span>Spatial <em>VR</em> OS<small>مساحتك الرقمية داخل النظارة</small></span></button><button id="immersive" class="icon-button" title="وضع المشاهدة">⛶</button></header><nav><button data-view="homeView" class="active">الرئيسية</button><button data-view="browser">المتصفح</button><button data-view="video">الفيديو</button><button data-view="settings">الضبط</button></nav>
-<section id="homeView" class="view home-view"><div class="hero"><span class="eyebrow">تجربة شاشة مزدوجة</span><h1>ادخل إلى<br><em>مساحتك</em></h1><p>افتح صفحات الويب أو شاهد فيديوهاتك المدعومة في عرض جانبي يناسب نظارة الهاتف.</p><div class="hero-actions"><button class="primary" data-go="browser">ابدأ التصفح <b>←</b></button><button class="secondary" data-go="video">شاهد فيديو <b>▶</b></button></div></div><div class="cards"><button class="feature-card" data-go="browser"><span class="feature-icon">◎</span><b>متصفح الويب</b><small>ابحث وافتح الصفحات داخل التطبيق</small><span class="card-arrow">←</span></button><button class="feature-card" data-go="video"><span class="feature-icon cyan">▷</span><b>مشغل الفيديو</b><small>شغّل الروابط المباشرة المدعومة</small><span class="card-arrow">←</span></button></div><div class="hint"><span>✦</span> ضع الهاتف أفقيًا واضبط العدستين من الإعدادات</div></section>
-<section id="browser" class="view hidden"><div class="section-title"><span class="eyebrow">استكشف الويب</span><h2>المتصفح</h2></div><div class="toolbar"><input id="url" placeholder="رابط موقع أو كلمات بحث" enterkeyhint="go"><button id="go" class="primary">اذهب</button></div><div class="toolbar browser-controls"><button id="back" aria-label="رجوع">رجوع</button><button id="forward" aria-label="تقدم">تقدم</button><button id="reload">تحديث</button><button id="external">فتح خارجي</button></div><p id="notice">أدخل رابطًا أو كلمات للبحث. قد تمنع بعض المواقع العرض داخل التطبيق.</p><div class="stereo"><iframe id="left" title="العين اليسرى" referrerpolicy="strict-origin-when-cross-origin"></iframe><iframe id="right" title="العين اليمنى" referrerpolicy="strict-origin-when-cross-origin"></iframe></div></section>
-<section id="video" class="view hidden"><div class="section-title"><span class="eyebrow">مشاهدة</span><h2>مشغل الفيديو</h2></div><div class="toolbar"><input id="videoUrl" placeholder="الصق رابط فيديو مباشر أو رابط YouTube" enterkeyhint="go"><button id="playUrl" class="primary">تحميل</button></div><div class="video-stereo"><video id="player" controls playsinline></video><video id="playerRight" muted playsinline aria-label="العين اليمنى"></video><div id="ytLeft" class="yt-player hidden" title="YouTube العين اليسرى"></div><div id="ytRight" class="yt-player hidden" title="YouTube العين اليمنى"></div></div><div class="toolbar video-controls"><button id="minus">−10 ث</button><button id="toggle" class="primary">تشغيل / إيقاف</button><button id="plus">+10 ث</button><button id="full">ملء الشاشة</button></div><p id="videoNotice">يدعم الروابط المباشرة وYouTube المسموح بتضمينه. فيديو VR الحقيقي يحتاج محتوى 360° أو 180° مصورًا لهذا الغرض.</p></section>
-<section id="settings" class="view hidden"><div class="section-title"><span class="eyebrow">ملاءمة النظارة</span><h2>إعدادات العرض</h2></div><label>حجم صورة كل عين <output id="widthOut"></output><input id="width" type="range" min="70" max="100" value="96"></label><label>المسافة بين الصورتين <output id="gapOut"></output><input id="gap" type="range" min="0" max="32" value="8"></label><div class="notice-card">الإعدادات تحفظ تلقائيًا على هذا الجهاز. النصفان يعرضان المحتوى نفسه ولا يضيفان عمقًا ثلاثي الأبعاد أو تتبعًا للرأس.</div></section><footer><span class="status-dot"></span> جاهز لوضع النظارة <span>•</span> iPhone</footer></main><script src="app.js"></script></body></html>
-
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07101d"><meta name="description" content="Spatial VR OS — لوحة فضائية للمواقع والفيديو على الهاتف">
+<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="assets/spatial-icon.svg" type="image/svg+xml">
+<title>Spatial VR OS</title><link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-aurora">
+<header class="normal-toolbar" id="normalToolbar">
+  <div class="brand-lockup"><span class="brand-mark">◉</span><span><b>Spatial VR OS</b><small>مساحتك الرقمية</small></span></div>
+  <div class="toolbar-actions"><span class="secure-state" id="connectionStatus">● متصل</span><button class="glass-button" data-action="settings" aria-label="الإعدادات">⚙</button><button class="primary-button" data-action="toggle-vr">◉ وضع النظارة</button></div>
+</header>
+<main id="appShell">
+  <div class="eye-stage" id="eyeStage">
+    <article class="eye" data-eye="0" aria-label="واجهة العين اليسرى">
+      <div class="glass-screen">
+        <div class="system-bar"><span class="system-icons">◈ &nbsp; <span data-online-label>متصل</span></span><time data-clock>--:--</time><span class="system-title">Spatial Lite</span><span class="system-icons">HTTPS ◇</span></div>
+        <div class="room-layout">
+          <nav class="side-rail" aria-label="التنقل الرئيسي">
+            <button class="rail-button selected" data-action="home"><span>⌂</span><small>الرئيسية</small></button>
+            <button class="rail-button" data-action="apps"><span>◫</span><small>تطبيقاتي</small></button>
+            <button class="rail-button" data-action="app" data-app="youtube"><span class="brand-chip youtube">▶</span><small>YouTube</small></button>
+            <button class="rail-button" data-action="browser"><span>◎</span><small>المتصفح</small></button>
+            <button class="rail-button" data-action="video"><span>▷</span><small>الفيديو</small></button>
+            <button class="rail-button" data-action="favorites"><span>☆</span><small>المفضلة</small></button>
+            <button class="rail-button" data-action="settings"><span>⚙</span><small>الضبط</small></button><button class="rail-button" data-action="immersive"><span>◌</span><small>إخفاء</small></button>
+          </nav>
+          <section class="viewport">
+            <div class="page-content" data-page-content></div>
+            <div class="app-dock" aria-label="التطبيقات السريعة">
+              <button data-action="apps" title="كل التطبيقات">▦</button>
+              <button data-action="app" data-app="youtube" title="YouTube"><span class="brand-chip youtube">▶</span></button>
+              <button data-action="app" data-app="kick" title="Kick"><span class="brand-chip kick">K</span></button>
+              <button data-action="app" data-app="twitch" title="Twitch"><span class="brand-chip twitch">▣</span></button>
+              <button data-action="browser" title="المتصفح"><span class="brand-chip browser">◎</span></button>
+              <button data-action="video" title="مشغل الفيديو"><span class="brand-chip video">▷</span></button>
+            </div>
+          </section>
+          <aside class="favorite-rail">
+            <div class="favorite-heading"><span>⭐</span><b>المفضلة</b><button data-action="add-favorite" aria-label="إضافة للمفضلة">＋</button></div>
+            <div class="favorite-list" data-favorite-list></div>
+            <button class="manage-favorites" data-action="favorites">إدارة المفضلة</button>
+          </aside>
+        </div>
+        <button class="vr-exit" data-action="toggle-vr" aria-label="إيقاف وضع النظارة">⤢ خروج</button>
+      </div>
+    </article>
+    <article class="eye" data-eye="1" aria-label="واجهة العين اليمنى">
+      <div class="glass-screen">
+        <div class="system-bar"><span class="system-icons">◈ &nbsp; <span data-online-label>متصل</span></span><time data-clock>--:--</time><span class="system-title">Spatial Lite</span><span class="system-icons">HTTPS ◇</span></div>
+        <div class="room-layout">
+          <nav class="side-rail" aria-label="التنقل الرئيسي">
+            <button class="rail-button selected" data-action="home"><span>⌂</span><small>الرئيسية</small></button>
+            <button class="rail-button" data-action="apps"><span>◫</span><small>تطبيقاتي</small></button>
+            <button class="rail-button" data-action="app" data-app="youtube"><span class="brand-chip youtube">▶</span><small>YouTube</small></button>
+            <button class="rail-button" data-action="browser"><span>◎</span><small>المتصفح</small></button>
+            <button class="rail-button" data-action="video"><span>▷</span><small>الفيديو</small></button>
+            <button class="rail-button" data-action="favorites"><span>☆</span><small>المفضلة</small></button>
+            <button class="rail-button" data-action="settings"><span>⚙</span><small>الضبط</small></button><button class="rail-button" data-action="immersive"><span>◌</span><small>إخفاء</small></button>
+          </nav>
+          <section class="viewport">
+            <div class="page-content" data-page-content></div>
+            <div class="app-dock" aria-label="التطبيقات السريعة">
+              <button data-action="apps" title="كل التطبيقات">▦</button>
+              <button data-action="app" data-app="youtube" title="YouTube"><span class="brand-chip youtube">▶</span></button>
+              <button data-action="app" data-app="kick" title="Kick"><span class="brand-chip kick">K</span></button>
+              <button data-action="app" data-app="twitch" title="Twitch"><span class="brand-chip twitch">▣</span></button>
+              <button data-action="browser" title="المتصفح"><span class="brand-chip browser">◎</span></button>
+              <button data-action="video" title="مشغل الفيديو"><span class="brand-chip video">▷</span></button>
+            </div>
+          </section>
+          <aside class="favorite-rail">
+            <div class="favorite-heading"><span>⭐</span><b>المفضلة</b><button data-action="add-favorite" aria-label="إضافة للمفضلة">＋</button></div>
+            <div class="favorite-list" data-favorite-list></div>
+            <button class="manage-favorites" data-action="favorites">إدارة المفضلة</button>
+          </aside>
+        </div>
+        <button class="vr-exit" data-action="toggle-vr" aria-label="إيقاف وضع النظارة">⤢ خروج</button>
+      </div>
+    </article>
+  </div>
+</main>
+<div class="portrait-warning" aria-live="polite"><span>◉</span><b>أدر الهاتف أفقيًا</b><small>لوضع النظارة، استخدم iPhone بالاتجاه الأفقي.</small></div>
+<video id="panoSource" class="pano-source" playsinline webkit-playsinline crossorigin="anonymous"></video>
+<input id="local360File" type="file" accept="video/*" hidden>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script src="app.js"></script>
+</body></html>
 
 
