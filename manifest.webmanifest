@@ -1,1 +1,2 @@
-{"name":"Spatial VR OS","short_name":"Spatial VR","lang":"ar","dir":"rtl","start_url":"./","display":"standalone","background_color":"#020705","theme_color":"#020705"}
+{"name":"Spatial VR OS","short_name":"Spatial VR","lang":"ar","dir":"rtl","start_url":"./","scope":"./","display":"standalone","background_color":"#050913","theme_color":"#07101d","icons":[{"src":"assets/spatial-icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]}
+
